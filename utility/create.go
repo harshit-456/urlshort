@@ -22,7 +22,7 @@ func CreateEndPoint(w http.ResponseWriter, req *http.Request) {
 
 	var url MyUrl
 	err := json.NewDecoder(req.Body).Decode(&url)
-	fmt.Println(url)
+	//fmt.Println(url)
 	//array declared without size is called slice,slice helps to make array varaiable length and also provides other utuilities
 	if err != nil {
 		fmt.Println("error in reading decoded body")
@@ -68,14 +68,13 @@ func CreateEndPoint(w http.ResponseWriter, req *http.Request) {
 	}
 
 	if (longurl == MyUrl{}) {
-		fmt.Println("5")
+		//fmt.Println("5")
 		hd := hashids.NewData()
 		h, _ := hashids.NewWithData(hd)
 
 		now := time.Now()
 		url.ID, _ = h.Encode([]int{int(now.Unix())}) //we will be hashing the timestamp,becoz thats unique
 		url.ShortUrl = "http://localhost:1235/" + url.ID
-		//bucket.Insert(url.ID,url,0)
 		_, _, err = client.Collection(conn).Add(ctx, map[string]interface{}{
 			"ID":       url.ID,
 			"LongUrl":  url.LongUrl,
